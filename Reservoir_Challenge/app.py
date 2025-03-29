@@ -69,7 +69,7 @@ async def insert_data_in_cache(data: List[ReservoirData]):
 
     # broadcast data to all websocket clients
     for connection in active_connections:
-        await connection.send_json(data.dict())
+        await connection.send_json(data)
 
     return {"message": f"Done! cache insert..."}
 
@@ -78,6 +78,7 @@ async def insert_data_in_cache(data: List[ReservoirData]):
 def read_from_cache():
     return cache.get("stored_reservoir_data")
 """
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
