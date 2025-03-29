@@ -36,7 +36,7 @@ The system receives real-time data from various reservoir sensors, processes it,
 Start the RabbitMQ producer and consumer in separate terminals
 ```
 cd ReservoirChallenge
-pip install
+pip install asyncio aio_pika pandas httpx numpy
 python reservoir_consume_dataFrames.py
 python reservoir_transform_send.py
 ```
