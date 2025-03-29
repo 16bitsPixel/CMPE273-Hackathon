@@ -43,6 +43,24 @@ The system receives real-time data from various reservoir sensors, processes it,
 
 * pandas: Libraries for data manipulation and handling of missing or invalid data.
 
+##  Running
+Start the RabbitMQ producer and consumer in separate terminals
+```
+cd ReservoirChallenge
+pip install
+python reservoir_consume_dataFrames.py
+python reservoir_transform_send.py
+```
+Run the backend FastAPI
+```
+fastapi dev app.py
+```
+Start the webapp
+```
+cd reservoir-dashboard
+npm install
+npm run dev
+```
 ## Authors
 
 * **Earl Padron**
