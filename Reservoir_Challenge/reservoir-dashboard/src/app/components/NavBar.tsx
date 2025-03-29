@@ -50,7 +50,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="sticky" sx={{ backgroundColor: '046B99', color: 'white' }} >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           {/* Left side logo */}

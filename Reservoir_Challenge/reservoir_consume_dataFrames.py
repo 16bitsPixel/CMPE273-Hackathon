@@ -32,12 +32,12 @@ async def process_message(message: aio_pika.IncomingMessage):
 
         # Handle NaN or missing values
         try:
-            value = float(value) if value not in ["NaN", "None", None] else None
+            value = float(value) if not pd.isna(value) else None
         except ValueError:
             value = None  # Set invalid values to None
         
         # Ensure the reservoir exists in our dictionary
-        if reservoir_code in reservoir_dataframes:
+        if reservoir_code in reservoir_dataframes and value is not None:
             new_row = pd.DataFrame([{"date": date, "value": value}])
             reservoir_dataframes[reservoir_code] = pd.concat([reservoir_dataframes[reservoir_code], new_row], ignore_index=True)
 
@@ -79,6 +79,8 @@ async def compute_final_statistics():
             print(f"Reservoir {code}: No valid data received.")
 
     print("----------------------------------\n")
+
+    print(statistics)
 
     # Send the statistics to FastAPI
     async with httpx.AsyncClient() as client:

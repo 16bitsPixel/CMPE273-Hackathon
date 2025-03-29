@@ -14,8 +14,6 @@ interface ReservoirData {
 
 const BarChartComponent: React.FC = () => {
   const [reservoirData, setReservoirData] = useState<ReservoirData[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:8000/ws");
@@ -23,18 +21,11 @@ const BarChartComponent: React.FC = () => {
     ws.onmessage = (event) => {
       const newData = JSON.parse(event.data);
       setReservoirData(newData);
+      console.log(newData);
     };
 
     return () => ws.close();
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   const formattedData = reservoirData.map((item) => ({
     name: item.reservoir_code,
