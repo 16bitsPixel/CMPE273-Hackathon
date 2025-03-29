@@ -36,7 +36,7 @@ const BarChartComponent: React.FC = () => {
   }));
 
   return (
-    <Paper elevation={3} style={{ padding: '20px', textAlign: 'center' }}>
+    <Paper elevation={3} style={{ padding: '20px', textAlign: 'center', width: '800px' }}>
       <Typography variant="h5" gutterBottom>
         Reservoir Depth Statistics
       </Typography>

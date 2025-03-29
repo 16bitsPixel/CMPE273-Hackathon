@@ -21,7 +21,6 @@ export default function Home() {
           flexGrow: 1,               // Allow this box to take remaining space
         }}
       >
-        <Typography variant="h3" sx={{marginTop: "5%"}}>Reservoir Statistics</Typography>
         <BarChartComponent />
       </Box>
     </Box>

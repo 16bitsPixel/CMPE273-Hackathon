@@ -60,7 +60,7 @@ export default function Header() {
             component="div"
             sx={{ display: { xs: 'none', md: 'block' } }}
           >
-            Reservoir Tracker
+            Reservoir Statistics
           </Typography>
         </Toolbar>
       </AppBar>

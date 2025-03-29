@@ -65,11 +65,13 @@ def insert_data_in_cache(data: List[ReservoirData]):
 
 @app.post("/process_data/")
 async def insert_data_in_cache(data: List[ReservoirData]):
-    cache.set("stored_audio_result", data)
+    data_dicts = [d.dict() for d in data]
+
+    cache.set("stored_audio_result", data_dicts)
 
     # broadcast data to all websocket clients
     for connection in active_connections:
-        await connection.send_json(data)
+        await connection.send_json(data_dicts)
 
     return {"message": f"Done! cache insert..."}
 

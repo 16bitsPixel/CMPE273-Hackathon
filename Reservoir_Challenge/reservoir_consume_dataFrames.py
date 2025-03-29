@@ -80,8 +80,6 @@ async def compute_final_statistics():
 
     print("----------------------------------\n")
 
-    print(statistics)
-
     # Send the statistics to FastAPI
     async with httpx.AsyncClient() as client:
         response = await client.post(FASTAPI_URL, json=statistics)
