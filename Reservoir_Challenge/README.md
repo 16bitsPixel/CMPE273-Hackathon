@@ -7,6 +7,10 @@ This project is designed to manage, process, and visualize real-time reservoir d
 
 The system receives real-time data from various reservoir sensors, processes it, and calculates statistics such as the minimum, maximum, average, and the latest depth for each reservoir. The data is sent to a FastAPI backend, which stores it and provides an API for clients. The frontend is built using React, providing users with a dashboard to view the latest reservoir statistics.
 
+## Architecture
+
+![Reservoir Architecture](https://github.com/16bitsPixel/CMPE273-Hackathon/blob/main/Reservoir_Challenge/resources/Reservoir%20Architecture.png)
+
 ## Features
 
 - Real-Time Data Processing:
