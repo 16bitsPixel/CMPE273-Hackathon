@@ -40,4 +40,3 @@ def insert_data_in_cache(data: AudioResult):
 @app.get("/retrieve_data/")
 def read_from_cache():
     return cache.get("stored_audio_result")
-
