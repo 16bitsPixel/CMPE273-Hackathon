@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Paper, Typography } from '@mui/material';
 
@@ -19,19 +18,14 @@ const BarChartComponent: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/retrieve_data/');
-        setReservoirData(response.data);
-      } catch (err) {
-        setError('Error fetching data');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+    const ws = new WebSocket("ws://localhost:8000/ws");
+
+    ws.onmessage = (event) => {
+      const newData = JSON.parse(event.data);
+      setReservoirData(newData);
     };
 
-    fetchData();
+    return () => ws.close();
   }, []);
 
   if (loading) {
