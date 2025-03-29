@@ -1,6 +1,8 @@
 # CMPE273-Hackathon
 ![Reservoir DashBoard](https://github.com/16bitsPixel/CMPE273-Hackathon/blob/main/Reservoir_Challenge/resources/Reservoir_Statistics.png)
 
+* **Demo** https://www.youtube.com/watch?v=sD-y0WNi1ow
+
 # ReservoirWatch
 
 This project is designed to manage, process, and visualize real-time reservoir data using RabbitMQ for messaging, FastAPI for the backend API, and React for the user interface.
