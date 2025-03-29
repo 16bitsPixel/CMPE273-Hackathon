@@ -14,6 +14,9 @@ The system consists of RabbitMQ producer-consumer interacting with a FastAPI to 
 ![Notification](https://github.com/16bitsPixel/CMPE273-Hackathon/blob/main/CarSounds_Challenge/resources/CarDashboard_Notification.png)
 
 # Video Demo
+https://youtu.be/XkBL8jglOMI  
+https://youtu.be/XkBL8jglOMI  
+https://youtu.be/XkBL8jglOMI  
 https://github.com/user-attachments/assets/defc3fc6-d69e-436e-b816-7b02add52267
 
 # How to Run
