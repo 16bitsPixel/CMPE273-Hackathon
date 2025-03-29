@@ -42,7 +42,6 @@ def read_root():
 
 @app.post("/process_data/")
 def insert_data_in_cache(data: List[ReservoirData]):
-    print(data)
     cache.set("stored_reservoir_data", data)
     return {"message": f"Done! cache insert..."}
 
