@@ -8,11 +8,26 @@ Created on Wed Mar 28 12:48:00 2025
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware 
+
+origins = [
+    "http://localhost:3000/", # React frontend
+]
+
+
 
 app = FastAPI(
     title="Data Retrieval API",
     description="After data has been cleaned, this API is used to transfer the data to frontend",
     version="0.0.1")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allow specific origins
+    allow_credentials=True,
+    allow_methods=[""],  # Allow all HTTP methods
+    allow_headers=[""],  # Allow all headers
+)
 
 # Define request model (we may need to modify this if we want to get from another queue)
 class ReservoirData(BaseModel):
