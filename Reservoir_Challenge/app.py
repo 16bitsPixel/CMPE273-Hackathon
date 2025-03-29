@@ -5,16 +5,9 @@ Created on Wed Mar 28 12:48:00 2025
 @author: bllanes
 """
 
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI
 from pydantic import BaseModel
-
-# we may want to use another RabbitMQ connection to retrieve the data from data cleaning
-"""
-import pika
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-channel = connection.channel()
-channel.queue_declare(queue='cleaned_data_queue', durable=True)
-"""
+from typing import List
 
 app = FastAPI(
     title="Data Retrieval API",
@@ -22,33 +15,36 @@ app = FastAPI(
     version="0.0.1")
 
 # Define request model (we may need to modify this if we want to get from another queue)
-class InputData(BaseModel):
-    name: str
-    age: int
+class ReservoirData(BaseModel):
+    reservoir_code: str
+    min_value: float
+    max_value: float
+    avg_value: float
+    latest_depth: float
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome Class CMPE 273 - FastAPI is running!"}
+
+class SimpleCache:
+    def __init__(self):
+        self.cache={}
+    def set(self,key,value):
+        self.cache[key] = value
+    def get(self,key):
+        return self.cache.get(key, None)
+    
+cache = SimpleCache()
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome Class CMPE 273 - FastAPI is running!"}
 
 @app.post("/process_data/")
-def process_data(data: InputData):
-    return {"message": f"Hello {data.name}, you are {data.age} years old."}
+def insert_data_in_cache(data: List[ReservoirData]):
+    cache.set("stored_reservoir_data", data)
+    return {"message": f"Done! cache insert..."}
 
-"""
-@app.get("/get_cleaned_data/")
-def get_cleaned_data():
-    # Fetch the latest cleaned data from RabbitMQ
-    body = channel.basic_get(queue="cleaned_data_queue", auto_ack=True)
-    if body:
-        return {"cleaned_data": body.decode()}
-    return {"cleaned_data": None}
-
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    # WebSocket endpoint for real-time updates.
-    await websocket.accept()
-    while True:
-        body = channel.basic_get(queue="cleaned_data_queue", auto_ack=True)
-        if body:
-            await websocket.send_text(body.decode())
-"""
+@app.get("/retrieve_data/")
+def read_from_cache():
+    return cache.get("stored_reservoir_data")
