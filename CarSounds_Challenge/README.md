@@ -17,6 +17,7 @@ The system consists of RabbitMQ producer-consumer interacting with a FastAPI to 
 https://youtu.be/XkBL8jglOMI  
 https://youtu.be/XkBL8jglOMI  
 https://youtu.be/XkBL8jglOMI  
+
 https://github.com/user-attachments/assets/defc3fc6-d69e-436e-b816-7b02add52267
 
 # How to Run
