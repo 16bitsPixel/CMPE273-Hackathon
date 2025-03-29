@@ -3,6 +3,7 @@ import aio_pika
 import pandas as pd
 import json
 import httpx  # For sending data to FastAPI
+import numpy as np  # For handling NaN values
 
 # Dictionary to store DataFrames for each reservoir
 reservoir_dataframes = {}
@@ -58,16 +59,22 @@ async def compute_final_statistics():
             df['date'] = pd.to_datetime(df['date'])
             latest_depth = float(df.sort_values(by='date', ascending=False).iloc[0]['value'])
 
+            # Handle NaN values: replace with None
+            min_val = None if np.isnan(min_val) else min_val
+            max_val = None if np.isnan(max_val) else max_val
+            avg_val = None if np.isnan(avg_val) else avg_val
+            latest_depth = None if np.isnan(latest_depth) else latest_depth
+
             stats = {
                 "reservoir_code": code,
-                "min_value": round(min_val, 2),
-                "max_value": round(max_val, 2),
-                "avg_value": round(avg_val, 2),
-                "latest_depth": round(latest_depth, 2)
+                "min_value": round(min_val, 2) if min_val is not None else None,
+                "max_value": round(max_val, 2) if max_val is not None else None,
+                "avg_value": round(avg_val, 2) if avg_val is not None else None,
+                "latest_depth": round(latest_depth, 2) if latest_depth is not None else None
             }
             statistics.append(stats)
 
-            print(f"Reservoir {code}: Min={min_val:.2f}, Max={max_val:.2f}, Avg={avg_val:.2f}, Latest Depth={latest_depth:.2f}")
+            print(f"Reservoir {code}: Min={min_val}, Max={max_val}, Avg={avg_val}, Latest Depth={latest_depth}")
         else:
             print(f"Reservoir {code}: No valid data received.")
 
@@ -80,7 +87,7 @@ async def compute_final_statistics():
 
 async def consume_from_rabbitMQ():
     """Connect to RabbitMQ and start consuming messages."""
-    connection = await aio_pika.connect_robust("amqp://guest:guest@localhost/")
+    connection = await aio_pika.connect_robust("amqp://guest:guest@localhost/")  # Change to your RabbitMQ server
     async with connection:
         channel = await connection.channel()
         
@@ -88,15 +95,15 @@ async def consume_from_rabbitMQ():
         queue = await channel.declare_queue("reservoir_data", durable=True)
         
         print("Waiting for messages...")
+
+        # Continuously consume messages
         await queue.consume(process_message)
 
-        # Wait for all messages to be processed
-        await asyncio.sleep(2)  # Small delay to ensure all messages are processed
-        while not message_queue.empty():
-            await message_queue.get()
-
-        # Compute final statistics after all messages
-        await compute_final_statistics()
+        # Keep the consumer alive and periodically compute statistics
+        while True:
+            # Wait for some time before computing statistics (e.g., every 10 seconds)
+            await asyncio.sleep(10)
+            await compute_final_statistics()
 
 # Run the consumer
 asyncio.run(consume_from_rabbitMQ())
