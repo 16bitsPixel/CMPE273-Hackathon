@@ -10,6 +10,12 @@
 Reservoir_Challenge directory holds all files for the California Reservoirs Dashboard project
 CarSounds_Challenge directory holds all files for the Car Sounds Dashboard project
 
+## Languages and Tech Stack(s) Used
+- Python
+- React/Next.js
+- FastAPI
+- RabbitMQ
+
 # The Problem
 After graduation, you joined a high-profile consulting company that collaborates with various industry sectors. Due to the significant demand for scalable enterprise distributed architectures, you were assigned two major projects: one with the State Reservoir Water Department and another with a highly profitable automobile company.
 
