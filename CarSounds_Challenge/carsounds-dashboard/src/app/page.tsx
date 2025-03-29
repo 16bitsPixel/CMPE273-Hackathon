@@ -1,7 +1,8 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import NavBar from "./components/NavBar";
+import PredictionCard from "./components/PredictionCard";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -19,17 +20,28 @@ export default function Home() {
   }, []);
 
   return (
-    <Box>
+    <Box sx = {{
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
       <NavBar />
-      <Typography>Live Audio Classification Data</Typography>
-      {audioData ? (
-        <div>
-          <p>Predicted Class: {audioData.predictedclass}</p>
-          <p>Confidence: {audioData.confidence}</p>
-        </div>
-      ) : (
-        <p>Waiting for data...</p>
-      )}
+
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',      // Center vertically
+          flexDirection: 'column',   // Stack the children vertically
+          flexGrow: 1,               // Allow this box to take remaining space
+        }}
+      >
+        <Typography variant="h3" sx={{marginTop: "5%"}}>Live Audio Classification Data</Typography>
+        {audioData ? (
+          <PredictionCard predictedclass={audioData.predictedclass} confidence={audioData.confidence} />
+        ) : (
+          <Typography variant = "h4">Waiting for data...</Typography>
+        )}
+      </Box>
     </Box>
   );
 }
