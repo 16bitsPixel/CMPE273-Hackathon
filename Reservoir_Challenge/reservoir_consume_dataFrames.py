@@ -17,7 +17,7 @@ for code in reservoir_codes:
 # Queue to track message completion
 message_queue = asyncio.Queue()
 
-FASTAPI_URL = "http://127.0.0.1:8000/reservoir-statistics"  # FastAPI endpoint
+FASTAPI_URL = "http://localhost:8000/process_data/"  # FastAPI endpoint
 
 async def process_message(message: aio_pika.IncomingMessage):
     """Process each message received from RabbitMQ and store it in DataFrame."""
@@ -50,13 +50,13 @@ async def compute_final_statistics():
 
     for code, df in reservoir_dataframes.items():
         if not df.empty and df['value'].notna().any():
-            min_val = df['value'].min()
-            max_val = df['value'].max()
-            avg_val = df['value'].mean()
+            min_val = float(df['value'].min())
+            max_val = float(df['value'].max())
+            avg_val = float(df['value'].mean())
             
             # Convert 'date' column to datetime for sorting
             df['date'] = pd.to_datetime(df['date'])
-            latest_depth = df.sort_values(by='date', ascending=False).iloc[0]['value']
+            latest_depth = float(df.sort_values(by='date', ascending=False).iloc[0]['value'])
 
             stats = {
                 "reservoir_code": code,

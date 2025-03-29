@@ -62,8 +62,8 @@ async def process_all_reservoirs(file_paths):
 
 if __name__ == "__main__":
     reservoir_files = [
-        "./resources/SHA_6.xlsx", "./resources/ORO_6.xlsx","./resources/CLE_6.xlsx","./resources/PNF_6.xlsx","./resources/BUL_6.xlsx",
-        "./resources/FOL_6.xlsx","./resources/BER_6.xlsx","./resources/DNP_6.xlsx","./resources/SNL_6.xlsx","./resources/NML_6.xlsx"
+        "Reservoir_Challenge/resources/SHA_6.xlsx", "Reservoir_Challenge/resources/ORO_6.xlsx","Reservoir_Challenge/resources/CLE_6.xlsx","Reservoir_Challenge/resources/PNF_6.xlsx","Reservoir_Challenge/resources/BUL_6.xlsx",
+        "Reservoir_Challenge/resources/FOL_6.xlsx","Reservoir_Challenge/resources/BER_6.xlsx","Reservoir_Challenge/resources/DNP_6.xlsx","Reservoir_Challenge/resources/SNL_6.xlsx","Reservoir_Challenge/resources/NML_6.xlsx"
     ]
     
     asyncio.run(process_all_reservoirs(reservoir_files))
